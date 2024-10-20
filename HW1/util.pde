@@ -168,22 +168,22 @@ public void CGCurve(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) {
     // coordinates (x, y).
 
     
-    stroke(0);
-    noFill();
-    bezier(p1.x,p1.y,p2.x,p2.y,p3.x,p3.y,p4.x,p4.y);
+    // stroke(0);
+    // noFill();
+    // bezier(p1.x,p1.y,p2.x,p2.y,p3.x,p3.y,p4.x,p4.y);
     
 
-    // float t = 0;
-    // float dt = 0.001;
-    // // (1 - t) ^ 3 * p1 + (1 - t) ^ 2 * p2 + (1 - t) * p3 + p4
-    // while (t <= 1) {
-    //     float x = (float) (Math.pow(1 - t, 3) * p1.x + 3 * Math.pow(1 - t, 2) * t * p2.x + 3 * (1 - t) * Math.pow(t, 2) * p3.x + Math.pow(t, 3) * p4.x);
-    //     float y = (float) (Math.pow(1 - t, 3) * p1.y + 3 * Math.pow(1 - t, 2) * t * p2.y + 3 * (1 - t) * Math.pow(t, 2) * p3.y + Math.pow(t, 3) * p4.y);
+    float t = 0;
+    float dt = 0.001;
+    // (1 - t) ^ 3 * p1 + (1 - t) ^ 2 * p2 + (1 - t) * p3 + p4
+    while (t <= 1) {
+        float x = (float) (Math.pow(1 - t, 3) * p1.x + 3 * Math.pow(1 - t, 2) * t * p2.x + 3 * (1 - t) * Math.pow(t, 2) * p3.x + Math.pow(t, 3) * p4.x);
+        float y = (float) (Math.pow(1 - t, 3) * p1.y + 3 * Math.pow(1 - t, 2) * t * p2.y + 3 * (1 - t) * Math.pow(t, 2) * p3.y + Math.pow(t, 3) * p4.y);
 
-    //     drawPoint(x, y, color(0, 0, 0));
+        drawPoint(x, y, color(0, 0, 0));
 
-    //     t += dt;
-    // }
+        t += dt;
+    }
 }
 
 public void CGEraser(Vector3 p1, Vector3 p2) {
