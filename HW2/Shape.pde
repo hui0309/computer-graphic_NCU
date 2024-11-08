@@ -5,14 +5,17 @@ public class Shape{
     
     public void drawShape(){                      
         Matrix4 model_matrix = localToWorld();
+        // println(model_matrix.toString() + "\n");
         Vector3[] t_pos = new Vector3[vertex.length];
+        Vector3[] ssaa_pos = new Vector3[vertex.length];
         for(int i=0;i<t_pos.length;i++){
-            t_pos[i] = model_matrix.mult(vertex[i].getVector4(1)).xyz();                       
+            // 照理來說應該要取homogeneous的?
+            t_pos[i] = model_matrix.mult(vertex[i].getVector4()).homogenized();   
+            // t_pos[i] = model_matrix.mult(vertex[i].getVector4()).xyz();    
         }
-        
         t_pos = Sutherland_Hodgman_algorithm(t_pos,engine.boundary);
-        
         for(int i=0;i<t_pos.length;i++){
+            ssaa_pos[i] = new Vector3(map(t_pos[i].x,-1,1,40,1040),map(t_pos[i].y,-1,1,100,2 * (height-50)),0);
             t_pos[i] = new Vector3(map(t_pos[i].x,-1,1,20,520),map(t_pos[i].y,-1,1,50,height-50),0);
         }
 
@@ -21,17 +24,35 @@ public class Shape{
         loadPixels();       
         for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
             for(int j = int(minmax[0].y);j<=minmax[1].y;j++){
-                if(pnpoly(i,j,t_pos)){                    
-                    drawPoint(i,j,color(100));
+                int cnt = 0;
+                if(pnpoly(i * 2, j * 2, ssaa_pos)){
+                    ++cnt;
+                }      
+                if(pnpoly(i * 2 + 1, j * 2, ssaa_pos)){
+                    ++cnt;
+                }  
+                if(pnpoly(i * 2, j * 2 + 1, ssaa_pos)){
+                    ++cnt;
+                }  
+                if(pnpoly(i * 2 + 1, j * 2 + 1, ssaa_pos)){
+                    ++cnt;
                 }
+                if(cnt != 0){
+                    int c = 100 * cnt / 4;      
+                    drawPoint(i, j, color(255 - c, 255 - c, 255 - c, c));
+                }
+                // if(pnpoly(i, j, t_pos)){
+                //     drawPoint(i, j, color(100));
+                // }
             }
         }
         
              
-        for(int i=0;i<t_pos.length;i++){          
-            CGLine(t_pos[i].x,t_pos[i].y,t_pos[(i+1)%t_pos.length].x,t_pos[(i+1)%t_pos.length].y); // if you finish it, you can commant this sentance
-        }
-        
+        // for(int i=0;i<t_pos.length;i++){          
+        //     CGLine(t_pos[i].x,t_pos[i].y,t_pos[(i+1)%t_pos.length].x,t_pos[(i+1)%t_pos.length].y); // if you finish it, you can commant this sentance
+        // }
+
+        // 以pixel將畫面畫上
         updatePixels();
         
     };
@@ -77,7 +98,6 @@ public class Star extends Shape{
    
 }
 
-
 public class Line extends Shape{
     Vector3 point1;
     Vector3 point2;
@@ -92,8 +112,6 @@ public class Line extends Shape{
     public void drawShape(){
         CGLine(point1.x,point1.y,point2.x,point2.y);
     }
-    
-   
 }
 
 

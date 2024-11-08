@@ -15,7 +15,6 @@ public class Engine {
         hierarchy = new Hierarchy(shapeRenderer.shapes);
 
         initButton();
-
     }
 
     public void initButton() {
@@ -58,15 +57,13 @@ public class Engine {
 
     void run() {
         shapeRenderer.run();
-        inspector.run();
         hierarchy.run();
-
+        inspector.run();
         for (ShapeButton sb : shapeButton) {
             sb.run(() -> {
                 shapeRenderer.addShape(sb.renderShape());
             });
         }
-
     }
 
 }

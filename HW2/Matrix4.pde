@@ -1,8 +1,9 @@
+
+
 static class Matrix4{
   float m[]=new float[16];
   Matrix4(){
     makeZero();
-  
   }
   Matrix4(float b){
     Fill(b);
@@ -28,7 +29,6 @@ static class Matrix4{
      m[4]  = 0.0f; m[5]  = 1.0f; m[6]  = 0.0f; m[7]  = 0.0f;
      m[8]  = 0.0f; m[9]  = 0.0f; m[10] = 1.0f; m[11] = 0.0f;
      m[12] = 0.0f; m[13] = 0.0f; m[14] = 0.0f; m[15] = 1.0f;
-    
   }
   void makeRotX(float a) {
     // TODO HW2
@@ -63,6 +63,8 @@ static class Matrix4{
     // You need to implement the translate matrix here.
     makeIdentity();
     setTranslation(t);
+    //vector3 定義的函式
+    // t.print();
   }
   void makeScale(Vector3 s) {
     // TODO HW2
@@ -429,10 +431,10 @@ static class Matrix4{
     inv.dive(det);
     return inv;
   }
-    String toString(){
-      return str(m[0])+" "+str(m[1])+" "+str(m[2])+" "+str(m[3])+"\n"
-            +str(m[4])+" "+str(m[5])+" "+str(m[6])+" "+str(m[7])+"\n"
-            +str(m[8])+" "+str(m[9])+" "+str(m[10])+" "+str(m[11])+"\n"
-            +str(m[12])+" "+str(m[13])+" "+str(m[14])+" "+str(m[15]);
-    }
+  String toString(){
+    return str(m[0])+" "+str(m[1])+" "+str(m[2])+" "+str(m[3])+"\n"
+          +str(m[4])+" "+str(m[5])+" "+str(m[6])+" "+str(m[7])+"\n"
+          +str(m[8])+" "+str(m[9])+" "+str(m[10])+" "+str(m[11])+"\n"
+          +str(m[12])+" "+str(m[13])+" "+str(m[14])+" "+str(m[15]);
+  }
 }

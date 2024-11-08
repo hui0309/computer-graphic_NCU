@@ -11,7 +11,6 @@ public class ShapeRenderer {
     public void run() {
         box.show();
         shapes.forEach(Shape::drawShape);
-
     }
 
     public void addShape(Shape s) {

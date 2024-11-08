@@ -1,11 +1,17 @@
+import java.util.Random;
 public class Transform {
     Vector3 position;
     Vector3 rotation;
     Vector3 scale;
+    Random random = new Random();
 
     public Transform() {
+        float randomFloat;
+
         position = new Vector3();
+
         rotation = new Vector3();
+
         scale = new Vector3(1, 1, 1);
     }
 

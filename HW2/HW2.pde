@@ -7,7 +7,10 @@ void setup() {
 
 void draw() {
     background(255);
-
     engine.run();
+}
 
+// 當有滑鼠事件再重畫即可
+void mousePressed() {
+  redraw();
 }
