@@ -63,8 +63,6 @@ static class Matrix4{
     // You need to implement the translate matrix here.
     makeIdentity();
     setTranslation(t);
-    //vector3 定義的函式
-    // t.print();
   }
   void makeScale(Vector3 s) {
     // TODO HW2

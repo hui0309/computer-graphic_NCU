@@ -53,20 +53,11 @@ public float distance(Vector3 a, Vector3 b) {
     Vector3 c = a.sub(b);
     return sqrt(Vector3.dot(c, c));
 }
-float crossProduct(Vector3 p1, Vector3 p2, Vector3 p3) {
-    return (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x);
-}
+
 boolean isPointOnLineSegment(Vector3 p1, Vector3 p2, Vector3 p3) {
     if(Math.abs(crossProduct(p1, p2, p3)) > 1e-6) return false;
     return (Math.min(p1.x, p2.x) <= p3.x && p3.x <= Math.max(p1.x, p2.x) &&
             Math.min(p1.y, p2.y) <= p3.y && p3.y <= Math.max(p1.y, p2.y));
-}
-// 計算兩條線段的交點
-private Vector3 intersection(Line p, Line q) {
-    float denom = (p.point1.x - p.point2.x) * (q.point1.y - q.point2.y) - (p.point1.y - p.point2.y) * (q.point1.x - q.point2.x);
-    float intersectX = ((p.point1.x * p.point2.y - p.point1.y * p.point2.x) * (q.point1.x - q.point2.x) - (p.point1.x - p.point2.x) * (q.point1.x * q.point2.y - q.point1.y * q.point2.x)) / denom;
-    float intersectY = ((p.point1.x * p.point2.y - p.point1.y * p.point2.x) * (q.point1.y - q.point2.y) - (p.point1.y - p.point2.y) * (q.point1.x * q.point2.y - q.point1.y * q.point2.x)) / denom;
-    return new Vector3(intersectX, intersectY, 0);
 }
 boolean pnpoly(float x, float y, Vector3[] vertexes) {
     // TODO HW2 
@@ -120,6 +111,16 @@ public Vector3[] findBoundBox(Vector3[] v) {
 
 }
 
+float crossProduct(Vector3 p1, Vector3 p2, Vector3 p3) {
+    return (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x);
+}
+// 計算兩條線段的交點
+private Vector3 intersection(Line p, Line q) {
+    float denom = (p.point1.x - p.point2.x) * (q.point1.y - q.point2.y) - (p.point1.y - p.point2.y) * (q.point1.x - q.point2.x);
+    float intersectX = ((p.point1.x * p.point2.y - p.point1.y * p.point2.x) * (q.point1.x - q.point2.x) - (p.point1.x - p.point2.x) * (q.point1.x * q.point2.y - q.point1.y * q.point2.x)) / denom;
+    float intersectY = ((p.point1.x * p.point2.y - p.point1.y * p.point2.x) * (q.point1.y - q.point2.y) - (p.point1.y - p.point2.y) * (q.point1.x * q.point2.y - q.point1.y * q.point2.x)) / denom;
+    return new Vector3(intersectX, intersectY, 0);
+}
 public Vector3[] Sutherland_Hodgman_algorithm(Vector3[] points, Vector3[] boundary) {
     ArrayList<Vector3> input = new ArrayList<Vector3>();
     ArrayList<Vector3> output = new ArrayList<Vector3>();
