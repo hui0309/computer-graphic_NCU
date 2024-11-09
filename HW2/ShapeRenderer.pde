@@ -68,7 +68,6 @@ public class Hierarchy {
         }
     }
 }
-
 public class Inspector {
     private Box box;
     Shape shape;
@@ -76,9 +75,10 @@ public class Inspector {
     Slider[] rotation_slider = new Slider[3];
     Slider[] scale_slider = new Slider[3];
     String inspectName = "xyz";
+    // 新增勾選框，用來選擇是否啟用抗拒尺
+    Checkbox resistanceCheckbox;
 
     public Inspector() {
-
         box = new Box(740 + 20, 50, 200, height - 100);
         box.setBoxColor(250);
     }
@@ -89,6 +89,8 @@ public class Inspector {
             position_slider[i] = new Slider(box.pos.add(new Vector3(40, 30 + i * 20, 0)),
                     new Vector3(box.pos.x + 40, box.pos.x + 150, 0), new Vector3(-1, 1, 0), true);
         }
+        resistanceCheckbox = new Checkbox(box.pos.add(new Vector3(10, 30 + 270, 0)),
+                             20, 20, "SSAA");
         position_slider[0].setValue(shape.transform.position.x);
         position_slider[1].setValue(shape.transform.position.y);
         position_slider[2].setValue(shape.transform.position.z);
@@ -108,7 +110,6 @@ public class Inspector {
         scale_slider[0].setValue(shape.transform.scale.x);
         scale_slider[1].setValue(shape.transform.scale.y);
         scale_slider[2].setValue(shape.transform.scale.z);
-
     }
 
     public void run() {
@@ -165,7 +166,10 @@ public class Inspector {
             }
             shape.transform.scale = new Vector3(scale_slider[0].value(), scale_slider[1].value(),
                     scale_slider[2].value());
-
+            shape.resistance = resistanceCheckbox.isChecked();
+            // 顯示和處理抗拒尺勾選框
+            resistanceCheckbox.show();
+            resistanceCheckbox.click();
         }
     }
 }

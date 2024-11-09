@@ -106,16 +106,17 @@ public Vector3[] findBoundBox(Vector3[] v) {
     //   | /____\|
     //    ------- r2
 
-    Vector3 recordminV = new Vector3(0);
-    Vector3 recordmaxV = new Vector3(2000);
-    for(int i = 0; i < v.length; ++i){
-        recordminV.x = Math.min(recordminV.x, v[i].x);
-        recordminV.y = Math.min(recordminV.y, v[i].y);
-        recordmaxV.x = Math.max(recordmaxV.x, v[i].x);
-        recordmaxV.y = Math.max(recordmaxV.y, v[i].y);
+    float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;
+    float maxX = -Float.MAX_VALUE, maxY = -Float.MAX_VALUE;
+
+    for (Vector3 vertex : v) {
+        minX = Math.min(minX, vertex.x);
+        minY = Math.min(minY, vertex.y);
+        maxX = Math.max(maxX, vertex.x);
+        maxY = Math.max(maxY, vertex.y);
     }
-    Vector3[] result = { recordminV, recordmaxV };
-    return result;
+
+    return new Vector3[] { new Vector3(minX, minY, 0), new Vector3(maxX, maxY, 0) };
 
 }
 
@@ -152,10 +153,8 @@ public Vector3[] Sutherland_Hodgman_algorithm(Vector3[] points, Vector3[] bounda
             }
             preInside = curInside;
         }
-        input = output;
-        // 用output創建一個新的ArrayList來保留input的原本內容
-        // ArrayList 類似 python 的淺拷貝
-        input = new ArrayList<>(output); 
+        input.clear();  // 清空現有內容
+        input.addAll(output);  // 直接把 output 放入 input，減少複製操作
         output.clear();
     }
     // output = input;

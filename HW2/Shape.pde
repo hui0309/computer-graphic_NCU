@@ -2,18 +2,18 @@
 public class Shape{   
     Vector3[] vertex = new Vector3[0];
     Transform transform = new Transform();
-    
+    boolean resistance = false;
     public void drawShape(){                      
         Matrix4 model_matrix = localToWorld();
-        // println(model_matrix.toString() + "\n");
+        // println(model_matrix.toString() +                                                  "\n");
         Vector3[] t_pos = new Vector3[vertex.length];
-        Vector3[] ssaa_pos = new Vector3[vertex.length];
         for(int i=0;i<t_pos.length;i++){
             // 照理來說應該要取homogeneous的?
             t_pos[i] = model_matrix.mult(vertex[i].getVector4()).homogenized();   
             // t_pos[i] = model_matrix.mult(vertex[i].getVector4()).xyz();    
         }
         t_pos = Sutherland_Hodgman_algorithm(t_pos,engine.boundary);
+        Vector3[] ssaa_pos = new Vector3[t_pos.length];
         for(int i=0;i<t_pos.length;i++){
             ssaa_pos[i] = new Vector3(map(t_pos[i].x,-1,1,40,1040),map(t_pos[i].y,-1,1,100,2 * (height-50)),0);
             t_pos[i] = new Vector3(map(t_pos[i].x,-1,1,20,520),map(t_pos[i].y,-1,1,50,height-50),0);
@@ -24,26 +24,28 @@ public class Shape{
         loadPixels();       
         for(int i = int(minmax[0].x);i<=minmax[1].x;i++){
             for(int j = int(minmax[0].y);j<=minmax[1].y;j++){
-                int cnt = 0;
-                if(pnpoly(i * 2, j * 2, ssaa_pos)){
-                    ++cnt;
-                }      
-                if(pnpoly(i * 2 + 1, j * 2, ssaa_pos)){
-                    ++cnt;
-                }  
-                if(pnpoly(i * 2, j * 2 + 1, ssaa_pos)){
-                    ++cnt;
-                }  
-                if(pnpoly(i * 2 + 1, j * 2 + 1, ssaa_pos)){
-                    ++cnt;
+                if(resistance){
+                    int cnt = 0;
+                    if(pnpoly(i * 2, j * 2, ssaa_pos)){
+                        ++cnt;
+                    }      
+                    if(pnpoly(i * 2 + 1, j * 2, ssaa_pos)){
+                        ++cnt;
+                    }  
+                    if(pnpoly(i * 2, j * 2 + 1, ssaa_pos)){
+                        ++cnt;
+                    }  
+                    if(pnpoly(i * 2 + 1, j * 2 + 1, ssaa_pos)){
+                        ++cnt;
+                    }
+                    if(cnt != 0){
+                        int c = 100 * cnt / 4;      
+                        drawPoint(i, j, color(255 - c, 255 - c, 255 - c, c));
+                    }
                 }
-                if(cnt != 0){
-                    int c = 100 * cnt / 4;      
-                    drawPoint(i, j, color(255 - c, 255 - c, 255 - c, c));
+                else if(pnpoly(i, j, t_pos)){
+                    drawPoint(i, j, color(255 - 100));
                 }
-                // if(pnpoly(i, j, t_pos)){
-                //     drawPoint(i, j, color(100));
-                // }
             }
         }
         
@@ -77,7 +79,6 @@ public class Rectangle extends Shape{
         return "Rectangle";
     }
     
-   
 }
 
 public class Star extends Shape{
