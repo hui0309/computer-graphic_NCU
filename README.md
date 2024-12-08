@@ -1,3 +1,67 @@
+# computer-graphic_HW3
+
+## 描述
+1. 這是一個3D小畫家，可供使用者對物體及攝像機進行一些基本操作
+2. 使用工具：上課教材、ChatGPT
+
+## 功能說明
+1. 可做移動、旋轉、縮放  
+   - 透過 Matrix 將物件從 Local Space 轉至 World Space  
+   - 在 Homogenious Space 做空間轉換  
+
+2. 將圖形填滿顏色  
+   - 透過 Ray Casting 檢測要填滿的地方  
+   - 透過物件的頂點資訊調整 Ray Casting 檢測範圍 
+
+##### 功能 1&2 程式碼及展示
+
+| ![物件旋轉](./HW3/demo/rotMat.png) | ![localToWorld](./HW3/demo/localToWorld.png) |
+---------------------------------------|---------------------------------------|
+
+
+![示範GIF](./HW3/demo/transfrom.gif)
+
+3. 調整視野範圍 
+   - 透過 Matrix 將物件從 World Space 轉至 Camera Space
+   - 透過 Matrix 將物件從 Camera Space(3D) 轉至 Image Space(2D)
+   - 透過按鍵可對 Camera 坐平移
+      - 'X':往+x移動；'x':往-x移動
+      - 'y':往+y移動；'y':往-y移動
+      - 'z':往+z移動；'z':往-z移動
+
+##### 功能 3 程式碼及展示
+
+| ![camSpace](./HW3/demo/camSpace.png) | ![imgSpace](./HW3/demo/imgSpace.png) | ![alt text](./HW3/demo/camControl.png) |
+|-------------------------------------|-------------------------------------|------------------------------------|
+
+![示範GIF](./HW3/demo/camera.gif)
+
+4. Depth Buffer
+   - 透過計算三角形深度決定渲染的顏色 
+
+##### 功能 4 程式碼及展示
+
+![Depth](./HW3/demo/depth.png)
+
+![示範GIF](./HW3/demo/depth.gif)
+
+5. Culling
+   - 計算View 及 三角形夾角判別內外 
+
+##### 功能 5 程式碼及展示
+
+![Culling](./HW3/demo/cullFun.png)
+
+| ![culling](./HW3/demo/culling.png)   | ![noculling](./HW3/demo/noCulling.png) |
+|-------------------------------------|---------------------------------------|
+| culling                            | no culling                            |
+
+
+## 成果展示
+![示範GIF](./HW3/demo/HW3.gif)
+
+------------------------------------------------------------------
+
 # computer-graphic_HW2
 
 ## 描述

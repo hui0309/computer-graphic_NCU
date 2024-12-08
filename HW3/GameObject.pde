@@ -80,9 +80,9 @@ public class GameObject {
             float dotProduct = Vector3.dot(normal, viewDir);
             // front face
             if (dotProduct < 0.0) {
-            for (int j = 0; j < img_pos.length; j++) {
-                    img_pos[j] = new Vector3(map(img_pos[j].x, -1, 1, renderer_size.x, renderer_size.z),
-                            map(img_pos[j].y, -1, 1, renderer_size.y, renderer_size.w), img_pos[j].z);
+                for (int j = 0; j < img_pos.length; j++) {
+                        img_pos[j] = new Vector3(map(img_pos[j].x, -1, 1, renderer_size.x, renderer_size.z),
+                                map(img_pos[j].y, -1, 1, renderer_size.y, renderer_size.w), img_pos[j].z);
                 }
                 CGLine(img_pos[0].x, img_pos[0].y, img_pos[1].x, img_pos[1].y);
                 CGLine(img_pos[1].x, img_pos[1].y, img_pos[2].x, img_pos[2].y);
@@ -98,7 +98,9 @@ public class GameObject {
         // TODO HW3
         // You need to calculate the model Matrix here.
         return Matrix4.Trans(transform.position)
-                .mult(Matrix4.RotY(transform.rotation.y)).mult(Matrix4.RotX(transform.rotation.x)).mult(Matrix4.RotZ(transform.rotation.z))
+                .mult(Matrix4.RotY(transform.rotation.y)).
+                mult(Matrix4.RotX(transform.rotation.x)).
+                mult(Matrix4.RotZ(transform.rotation.z))
                 .mult(Matrix4.Scale(transform.scale));
 
     }

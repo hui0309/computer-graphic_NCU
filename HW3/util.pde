@@ -149,6 +149,7 @@ public float getDepth(float x, float y, Vector3[] vertex) {
     Vector3 ab = B.sub(A);
     Vector3 ac = C.sub(A);
     Vector3 n = Vector3.cross(ab, ac);
+    if(n.z < 1e-6) return Float.MAX_VALUE;
     float d = -1 * Vector3.dot(n, A);
     return -(n.x * x + n.y * y + d) / n.z;
 }
